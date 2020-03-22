@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-
+app.use(express.json());
 const courses = [
   {
     courseID: 1,
@@ -20,6 +20,14 @@ app.get("/", (req, res) => {
 });
 app.get("/api/courses", (req, res) => {
   res.send(courses);
+});
+app.post("/api/courses", (req, res) => {
+  const course = {
+    courseID: courses.length + 1,
+    title: req.body.title
+  };
+  courses.push(course);
+  res.send(course);
 });
 app.get("/api/courses/:courseID", (req, res) => {
   const course = courses.find(
