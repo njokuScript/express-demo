@@ -21,8 +21,12 @@ app.get("/", (req, res) => {
 app.get("/api/courses", (req, res) => {
   res.send(courses);
 });
-app.get("/api/courses/:courseID/:title", (req, res) => {
-  res.send(req.params);
+app.get("/api/courses/:courseID", (req, res) => {
+  const course = courses.find(
+    c => c.courseID === parseInt(req.params.courseID)
+  );
+  if (!course) res.status(404).send("Course not found");
+  res.send(course);
 });
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Listening on port ${port}..`));
