@@ -3,15 +3,15 @@ const app = express();
 
 const courses = [
   {
-    id: 1,
+    courseID: 1,
     title: "biology"
   },
   {
-    id: 2,
+    courseID: 2,
     title: "chemistry"
   },
   {
-    id: 3,
+    courseID: 3,
     title: "physics"
   }
 ];
@@ -20,6 +20,9 @@ app.get("/", (req, res) => {
 });
 app.get("/api/courses", (req, res) => {
   res.send(courses);
+});
+app.get("/api/courses/:courseID/:title", (req, res) => {
+  res.send(req.params);
 });
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Listening on port ${port}..`));
