@@ -23,8 +23,7 @@ app.get("/api/courses", (req, res) => {
 });
 app.post("/api/courses", (req, res) => {
   if (!req.body.title || req.body.title < 4) {
-    res.status(400).send("Enter a minimum of 3 characters");
-    return;
+    return res.status(400).send("Enter a minimum of 3 characters");
   }
   const course = {
     courseID: courses.length + 1,
@@ -38,7 +37,7 @@ app.get("/api/courses/:courseID", (req, res) => {
     c => c.courseID === parseInt(req.params.courseID)
   );
   if (!course) res.status(404).send("Course not found");
-  res.send(course);
+  return res.send(course);
 });
 
 app.put("/api/courses/:courseID", (req, res) => {
@@ -56,6 +55,21 @@ app.put("/api/courses/:courseID", (req, res) => {
   //update course,
   //return updated course
   course.title = req.body.title;
+  res.send(course);
+});
+app.delete("/api/courses/:courseID", (req, res) => {
+  //look up the course
+  const course = courses.find(
+    c => c.courseID === parseInt(req.params.courseID)
+  );
+  if (!course) res.status(404).send("course not found");
+  res.send(course);
+
+  //delete course
+  const index = courses.indexOf(course);
+  courses.splice(index, 1);
+
+  //return course
   res.send(course);
 });
 const port = process.env.PORT || 3000;
