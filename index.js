@@ -1,3 +1,5 @@
+const morgan = require("morgan");
+const helmet = require("helmet");
 const express = require("express");
 const logger = require("./logger");
 const auth = require("./authentication");
@@ -5,6 +7,13 @@ const app = express();
 app.use(express.json());
 app.use(logger);
 app.use(auth);
+app.use(helmet());
+
+console.log(`app: ${app.get("env")}`);
+if (app.get("env") === "development") {
+  app.use(morgan("tiny"));
+  console.log("Using morgan");
+}
 const courses = [
   {
     courseID: 1,
