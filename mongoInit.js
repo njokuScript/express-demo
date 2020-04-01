@@ -15,22 +15,25 @@ const courseSchema = new mongoose.Schema({
 const Course = mongoose.model("Course", courseSchema);
 const createCourse = async () => {
   const course = new Course({
-    name: "building CryptoCurrencies",
+    name: "Decentralized apps",
     author: "Njoku Emmanuel",
-    tags: ["solidity", "Ethereum"],
+    tags: ["solidity", "Tex"],
     isPublished: true
   });
 
   const result = await course.save();
   console.log(result);
 };
+const pageNumber = 2;
+const pageSize = 10;
 createCourse();
 const getCourse = async () => {
   const courses = await Course.find({
-    isPublished: "true"
+    author: "Njoku Emmanuel"
   })
-    .sort({ author: "Njoku Emmanuel" })
-    .limit(10);
+    .sort({ name: 1, tags: 1 })
+    .skip((pageNumber - 1) * pageSize)
+    .limit(pageSize);
   console.log(courses);
 };
 getCourse();
