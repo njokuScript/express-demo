@@ -24,11 +24,12 @@ const createCourse = async () => {
   const result = await course.save();
   console.log(result);
 };
+createCourse();
 const getCourse = async () => {
   const courses = await Course.find({
     isPublished: "true"
   })
-    .sort({ name: 1 })
+    .sort({ author: "Njoku Emmanuel" })
     .limit(10);
   console.log(courses);
 };
