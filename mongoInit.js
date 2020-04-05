@@ -7,7 +7,15 @@ mongoose
 const courseSchema = new mongoose.Schema({
   name: { type: String, required: true, minlength: 5, maxlength: 255 },
   author: String,
-  tags: [String],
+  tags: {
+    type: Array,
+    validate: {
+      validator: function (value) {
+        return value.length > 0;
+      },
+      message: "The course must have at least one tag",
+    },
+  },
   date: { type: Date, default: Date.now },
   isPublished: Boolean,
   price: {
@@ -28,10 +36,10 @@ const createCourse = async () => {
   const course = new Course({
     name: "Decentralized apps",
     author: "Njoku Emmanuel",
-    tags: ["solidity", "Tex"],
+    tags: [],
     isPublished: true,
     price: 30,
-    category: "-",
+    category: "blockchain",
   });
   try {
     const result = await course.save();
