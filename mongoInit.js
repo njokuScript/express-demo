@@ -36,7 +36,7 @@ const createCourse = async () => {
   const course = new Course({
     name: "Decentralized apps",
     author: "Njoku Emmanuel",
-    tags: [],
+    tags: ["backend"],
     isPublished: true,
     price: 30,
     category: "blockchain",
